@@ -1,36 +1,39 @@
-function myFetch (url, method, data) {
-    return new Promise((res, rej) => {
-        const xhr = new XMLHttpRequest()
-        xhr.open(method || "GET", url)
-        xhr.setRequestHeader("Content-Type", "application/json")
-        xhr.responseType = "json"
-        xhr.onload = function () {
-            res(xhr.response)
-        }
-        xhr.onerror = function () {
-            rej("error")
-        }
-        xhr.send(JSON.stringify(data))
 
-        // xhr.onreadystatechange = function () { 
-        //     if (xhr.readyState === 4) {
-        //       console.log('inside readystate', xhr.status)
-        //       if (xhr.status >= 200 && xhr.status < 300) // || xhr.status === 304)//Cache
-        //       {
-        //         console.log('in if, 200+')
-        //         resovle(xhr.response)//xhr.response
-        //       } else {
-        //         console.log('inside else', xhr.status)
-        //         reject(new Error(this.statusText))
-
-        //       }
-        //     }
-        //   }
-    })
-}
 const APIs = (() => {
+    // init = { method: "GET", body: {} }
+    function myFetch (url, init) {
+        return new Promise((res, rej) => {
+            const xhr = new XMLHttpRequest()
+            xhr.open(init?.method || "GET", url)
+            xhr.setRequestHeader("Content-Type", "application/json")
+            xhr.responseType = "json"
+            xhr.onload = function () {
+                res(xhr.response)
+            }
+            xhr.onerror = function () {
+                rej("error")
+            }
+            xhr.send(JSON.stringify(init?.body))
+
+            // xhr.onreadystatechange = function () { 
+            //     if (xhr.readyState === 4) {
+            //       console.log('inside readystate', xhr.status)
+            //       if (xhr.status >= 200 && xhr.status < 300) // || xhr.status === 304)//Cache
+            //       {
+            //         console.log('in if, 200+')
+            //         resovle(xhr.response)//xhr.response
+            //       } else {
+            //         console.log('inside else', xhr.status)
+            //         reject(new Error(this.statusText))
+
+            //       }
+            //     }
+            //   }
+        })
+    }
     const createTodo = (newTodo) => {
-        return myFetch("http://localhost:3000/todos/", 'POST', newTodo)
+        const init = { method: 'POST', body: newTodo }
+        return myFetch("http://localhost:3000/todos/", init)
         // return fetch("http://localhost:3000/todos", {
         //     method: "POST",
         //     body: JSON.stringify(newTodo),
@@ -38,7 +41,7 @@ const APIs = (() => {
         // }).then((res) => res.json())
     }
     const deleteTodo = (id) => {
-        return myFetch("http://localhost:3000/todos/" + id, "DELETE")
+        return myFetch("http://localhost:3000/todos/" + id, { method: "DELETE" })
         // return fetch("http://localhost:3000/todos/" + id, {
         //     method: "DELETE",
         // }).then((res) => res.json())
@@ -48,7 +51,8 @@ const APIs = (() => {
 
     }
     const updateIsDone = (id, updateTodo) => {
-        return myFetch("http://localhost:3000/todos/" + id, "PATCH", updateTodo)
+        const init = { method: "PATCH", body: updateTodo }
+        return myFetch("http://localhost:3000/todos/" + id, init)
         // return fetch("http://localhost:3000/todos/" + id, {
         //     method: "PATCH",
         //     body: JSON.stringify(updateTodo),
@@ -56,7 +60,8 @@ const APIs = (() => {
         // }).then((res) => res.json()) 
     }
     const updateContent = (id, updateTodo) => {
-        return myFetch("http://localhost:3000/todos/" + id, "PATCH", updateTodo)
+        const init = { method: "PATCH", body: updateTodo }
+        return myFetch("http://localhost:3000/todos/" + id, init)
         // return fetch("http://localhost:3000/todos/" + id, {
         //     method: "PATCH",
         //     body: JSON.stringify(updateTodo),
@@ -170,6 +175,7 @@ const Controller = ((view, model) => {
                 const isEditMode = liEl.classList.contains('editMode')
                 // console.log(spanEl.innerHTML)
                 if (isEditMode) {
+                    //if(inputEl.value){}
                     const updateTodo = { content: inputEl.value }
                     model.updateContent(+id, updateTodo).then(data => {
                         state.todos = state.todos.map(todo => {
