@@ -175,17 +175,19 @@ const Controller = ((view, model) => {
                 const isEditMode = liEl.classList.contains('editMode')
                 // console.log(spanEl.innerHTML)
                 if (isEditMode) {
-                    //if(inputEl.value){}
-                    const updateTodo = { content: inputEl.value }
-                    model.updateContent(+id, updateTodo).then(data => {
-                        state.todos = state.todos.map(todo => {
-                            if (todo.id === + id) {
-                                todo.content = inputEl.value
-                            }
-                            return todo
+                    if (inputEl.value !== spanEl.innerHTML) {// 减少更新次数
+                        console.log(spanEl.innerHTML)
+                        const updateTodo = { content: inputEl.value }
+                        model.updateContent(+id, updateTodo).then(data => {
+                            state.todos = state.todos.map(todo => {
+                                if (todo.id === + id) {
+                                    todo.content = inputEl.value
+                                }
+                                return todo
+                            })
+                            // console.log('inside undateContent', state.todos)
                         })
-                        // console.log('inside undateContent', state.todos)
-                    })
+                    }
                 } else {
                     inputEl.value = spanEl.innerHTML
                 }

@@ -6,12 +6,12 @@
       "id": 2
     },
     {
-      "content": "driving",
+      "content": "drive",
       "isDone": true,
       "id": 5
     },
     {
-      "content": "walking",
+      "content": "walk",
       "isDone": false,
       "id": 6
     },
