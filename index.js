@@ -111,7 +111,7 @@ const View = (() => {
         let todosTemplate = ""
         let donesTemplate = ''
         // console.log('inside render', todos)
-        const leftArrowStr = `<div class="move-btn done"><svg class="move-btn done" focusable="false" aria-hidden="true" viewBox="0 0 24 24" aria-label="fontSize small">
+        const leftArrowStr = `<div class="move-btn done"><svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" aria-label="fontSize small">
             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
             </svg></div>`
         const rightArrowStr = `<div class="move-btn"><svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowForwardIcon" aria-label="fontSize small">
@@ -128,13 +128,13 @@ const View = (() => {
                 const doneLiTemplate = `<li id="${todo.id}">
                  ${leftArrowStr}                
                  <input type="text" />
-                 <span class='${todo.id}'>${todo.content}</span> 
+                 <span >${todo.content}</span> 
                  ${updateStr + deleteStr}
                 </li>`
                 donesTemplate += doneLiTemplate //class='${todo.id}' might delete
             } else {
                 const liTemplate = `<li id="${todo.id}">
-                 <span class='${todo.id}'>${todo.content}</span><input type="text" />
+                 <span>${todo.content}</span><input type="text" />
                  ${updateStr + deleteStr + rightArrowStr}
                 </li>`
                 todosTemplate += liTemplate
@@ -232,7 +232,7 @@ const Controller = ((view, model) => {
                         return todo
                     })
                     // console.log('inside undateISDONE', state.todos)
-                    event.target.classList.toggle("done")
+                    //event.target.classList.toggle("done") //no need?
                 })
 
             }

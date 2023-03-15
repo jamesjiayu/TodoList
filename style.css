@@ -31,7 +31,6 @@ html {
 
 .todo-list,
 .done-list {
-  padding: 0;
   margin: 0 10px;
   display: flex;
   flex-direction: column;
@@ -55,28 +54,28 @@ html {
   flex-grow: 1;
   text-align: center;
 }
+ul li input[type='text'] {
+  display: none;
+}
 ul li.editMode span {
   display: none;
 }
 ul li.editMode input[type='text'] {
   display: block;
 }
-ul li input[type='text'] {
-  display: none;
-}
 
 svg {
   width: 20px;
   height: 20px;
-  pointer-events: none; /* + <div><svg><svg></div>*/
+  pointer-events: none; /* + <div><svg ><svg></div>*/
 }
 svg path {
   /* pointer-events: all; */
   fill: #f0f0f0;
 }
 .submit-btn {
-  border-radius: 6px;
-  border: 0;
+  border-radius: 4px;
+  border-width: 0;
   background-color: #008cba;
   color: #f0f0f0;
 }
@@ -84,7 +83,7 @@ svg path {
 .update-btn {
   background-color: #008cba;
   border-radius: 4px;
-  border: 0;
+  border-width: 0;
 }
 /* li svg {
   fill: #f0f0f0;
@@ -92,12 +91,12 @@ svg path {
 .delete-btn {
   background-color: #c94c4c;
   border-radius: 4px;
-  border: 0;
+  border-width: 0;
 }
 .move-btn {
   background-color: #4caf50;
   border-radius: 4px;
-  border: 0;
+  border-width: 0;
 }
 .lists_done,
 .lists_pending {
@@ -114,5 +113,6 @@ svg path {
 .lists_done p,
 .lists_pending p {
   padding-left: 12px;
+  margin-bottom: 1em;
   font-weight: 600;
 }
